@@ -32,8 +32,8 @@ fn pmap(fun: extern fn(~str) -> uint, myvect:&[~str]) {
 		let t = s.clone();
 		parent1.send(s);
 		parent2.send(t);
-		println(fmt!("%u", parent1.recv()));
-		println(fmt!("%u", parent2.recv()));
+		println(format!("{:u}", parent1.recv()));
+		println(format!("{:u}", parent2.recv()));
 	}
 }
 
