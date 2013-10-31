@@ -12,18 +12,20 @@ fn pmap(fun: extern fn(~str) -> uint, myvect:&[~str]) {
 
 	do spawn {
 		loop {
-			let s:~str = child1.recv();
-			let result = fun(s);
-			child1.send(result);
+                        match child1.try_recv() {
+			    Some(s) => child1.send(fun(s)),
+                            None => break
+                        }
 		}
 	}
 
 	let fun2 = fun.clone();
 	do spawn {
 		loop {
-			let s:~str = child2.recv();
-			let result = fun2(s);
-			child2.send(result);
+                        match child2.try_recv() {
+			    Some(s) => child2.send(fun2(s)),
+                            None => break
+                        }
 		}
 	}
 
